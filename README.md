@@ -1,1 +1,1 @@
-# Начало работы с QAAutomationApp
+# Начало работы с QA Automation App

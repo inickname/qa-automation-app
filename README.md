@@ -1,1 +1,1 @@
-# Начало работы с QA Automation App
+# Начало работы с Click Up

@@ -28,3 +28,10 @@ class TaskApiClient:
             response.raise_for_status()
         # Для DELETE часто нечего возвращать из тела, либо можно вернуть статус-код или сам response
         return response  # или response.status_code
+
+    def get_tasks(self, list_id):
+        # Отправляет запрос на получение tasks.
+        response = self.auth_session.get(f"{self.base_url}/api/v2/list/{list_id}/task")
+        if response.status_code != 200:
+            response.raise_for_status()
+        return response

@@ -10,10 +10,9 @@ class TestTasks:
         """
         task_api_client = TaskApiClient(auth_session)
         task_scenarios = TaskScenarios(task_api_client)
-        task_id = task_scenarios.create_task_and_check(delete_manager, task_data, list_id)
-        # delete_manager.append(task_id)
+        task_scenarios.create_task_and_check(delete_manager, task_data, list_id)
 
-    def test_get_and_verify_task_exist(self, auth_session, task_id="86c7yqchf"):
+    def test_get_and_verify_task_exist(self, auth_session, task_id="86c7ythjj"):
         """
         Сценарий: получить task и проверить, что ответ не пуст.
         """

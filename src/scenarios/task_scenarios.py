@@ -15,8 +15,8 @@ class TaskScenarios:
         created_task_data = self.api_client.create_task(task_data, list_id)
         task_id = created_task_data.json().get("id")
         assert task_id is not None, f"ID не найден в ответе на создание: {created_task_data}"
-        delete_manager.append(task_id)
         print(f"Task с ID {task_id} успешно создан.")
+        delete_manager.append(task_id)
         return task_id
 
     def get_and_verify_task_exist(self, task_id):

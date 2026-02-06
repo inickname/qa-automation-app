@@ -25,15 +25,19 @@ def task_data():
 
         return task
 
-    yield _task_data
+    return _task_data
 
 
 @pytest.fixture()
 def delete_manager(auth_session):
+    task_api_client = TaskApiClient(auth_session)
     task_id_pool = []
 
     yield task_id_pool
 
     for task_id in task_id_pool:
-        dede = TaskApiClient(auth_session)
-        dede.delete_task(task_id)
+        task_api_client.delete_task(task_id)
+
+        get_tasks_response = task_api_client.get_tasks("901519603511").json()
+        task_ids = [task.get('id') for task in get_tasks_response.get('tasks', [])]
+        assert task_id not in task_ids, "ID созданного task найден в списке tasks после удаления."

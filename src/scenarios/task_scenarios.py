@@ -1,4 +1,6 @@
 from src.api_clients.task_api_client import TaskApiClient
+from src.data_models.task_response_data_model import TaskResponseModel
+from src.utils.validate_task_response import ValidateTaskResponse
 from tests.conftest import task_data, delete_manager
 
 
@@ -15,6 +17,10 @@ class TaskScenarios:
         created_task_data = self.api_client.create_task(task_data, list_id)
         task_id = created_task_data.json().get("id")
         assert task_id is not None, f"ID не найден в ответе на создание: {created_task_data}"
+
+        ValidateTaskResponse.validate_response(created_task_data, TaskResponseModel, 200,
+                                               task_data.model_dump())
+
         print(f"Task с ID {task_id} успешно создан.")
         delete_manager.append(task_id)
         return task_id

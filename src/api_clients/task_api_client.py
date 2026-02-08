@@ -6,11 +6,11 @@ class TaskApiClient:
         self.auth_session = auth_session
         self.base_url = Url.BASE_URL.value
 
-    def create_task(self, task_data, list_id):
+    def create_task(self, task_data, list_id, expected_status_code=200):
         # Отправляет запрос на создание task.
-        response = self.auth_session.post(f"{self.base_url}/api/v2/list/{list_id}/task", json=task_data.model_dump())
+        response = self.auth_session.post(f"{self.base_url}/api/v2/list/{list_id}/task", json=task_data)
         # Базовая проверка, что запрос успешен и можем парсить JSON.
-        if response.status_code != 200:
+        if response.status_code != expected_status_code:
             response.raise_for_status()  # Выбросит HTTPError для плохих статусов
         return response
 

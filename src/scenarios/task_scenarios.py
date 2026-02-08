@@ -13,13 +13,13 @@ class TaskScenarios:
         Сценарий: создать и проверить task.
         Возвращает ID созданного task.
         """
-        task_data = task_data()
+        task_data = task_data().model_dump()
         created_task_data = self.api_client.create_task(task_data, list_id)
         task_id = created_task_data.json().get("id")
         assert task_id is not None, f"ID не найден в ответе на создание: {created_task_data}"
 
         ValidateTaskResponse.validate_response(created_task_data, TaskResponseModel, 200,
-                                               task_data.model_dump())
+                                               task_data)
 
         print(f"Task с ID {task_id} успешно создан.")
         delete_manager.append(task_id)
@@ -35,3 +35,10 @@ class TaskScenarios:
         print(f"Получена информация о task с id '86c7f4v8a'.")
 
         return task
+
+    def create_task_negative(self, list_id, invalid_payload, expected_status_code):
+        """
+        Сценарий: создать task с разными наборами невалидных данных,
+        чтобы убедиться, что система правильно обрабатывает ошибки.
+        """
+        response = self.api_client.create_task(list_id, invalid_payload, expected_status_code)

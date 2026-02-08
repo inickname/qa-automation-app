@@ -24,9 +24,9 @@ class TestTasks:
 
     @pytest.mark.parametrize("invalid_payload, expected_status_code", [
         ({'name': ''}, 400),
-        # ({"name": None}, 400),
-        # ({"name": 0}, 400),
-        # ({"description": "Description"}, 400)
+        ({"name": None}, 400),
+        ({"name": 0}, 400),
+        ({"description": "Description"}, 400)
     ])
     def test_create_task_nagative(self, auth_session, invalid_payload, expected_status_code, list_id="901519603511"):
         """

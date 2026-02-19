@@ -26,23 +26,26 @@ class TaskScenarios:
         delete_manager.append(task_id)
         return task_id
 
-    def get_and_verify_task_exist(self, task_id):
+    def get_and_verify_task_exist(self, delete_manager, task_data, list_id):
         """
         Сценарий: получить task и проверить, что ответ не пуст.
         """
+        task_data = task_data().model_dump()
+        task_id = self.api_client.create_task(task_data, list_id).json().get("id")
+
         task = self.api_client.get_task(task_id).json()
 
         assert task, "Ответ task пуст"
-        print(f"Получена информация о task с id '86c7f4v8a'.")
+        print(f"Получена информация о task с id {task_id}.")
 
         return task_id
 
-    def create_task_negative(self, list_id, invalid_payload, expected_status_code):
+    def create_task_negative(self, list_id, invalid_task_data, expected_status_code):
         """
         Сценарий: создать task с разными наборами невалидных данных,
         чтобы убедиться, что система правильно обрабатывает ошибки.
         """
-        response = self.api_client.create_task(invalid_payload, expected_status_code, list_id)
+        response = self.api_client.create_task(invalid_task_data, expected_status_code, list_id)
 
         assert response.status_code == expected_status_code, (f"Ожидался {expected_status_code} статус-код, "
                                                               f"получен {response.status_code}")

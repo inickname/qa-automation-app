@@ -51,4 +51,4 @@ class TestTasks:
         """
         task_api_client = TaskApiClient(auth_session)
         task_scenarios = TaskScenarios(task_api_client)
-        task_scenarios.create_task_negative(list_id, invalid_task_data, expected_status_code)
+        task_scenarios.create_task_negative(invalid_task_data, list_id, expected_status_code)

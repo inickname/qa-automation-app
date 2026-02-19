@@ -6,7 +6,7 @@ class TaskApiClient:
         self.auth_session = auth_session
         self.base_url = Url.BASE_URL.value
 
-    def create_task(self, task_data, expected_status_code=200, list_id="901519603511"):
+    def create_task(self, task_data, list_id, expected_status_code=200):
         # Отправляет запрос на создание task.
         response = self.auth_session.post(f"{self.base_url}/api/v2/list/{list_id}/task", json=task_data)
         # Базовая проверка, что запрос успешен и можем парсить JSON.

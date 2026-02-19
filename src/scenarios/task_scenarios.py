@@ -74,12 +74,12 @@ class TaskScenarios:
         print(f"Task с ID {task_id} отправлен на удаление.")
         return deleted_task_data.status_code
 
-    def create_task_negative(self, list_id, invalid_task_data, expected_status_code):
+    def create_task_negative(self, invalid_task_data, list_id, expected_status_code):
         """
         Сценарий: создать task с разными наборами невалидных данных,
         чтобы убедиться, что система правильно обрабатывает ошибки.
         """
-        response = self.api_client.create_task(invalid_task_data, expected_status_code, list_id)
+        response = self.api_client.create_task(invalid_task_data, list_id, expected_status_code)
 
         assert response.status_code == expected_status_code, (f"Ожидался {expected_status_code} статус-код, "
                                                               f"получен {response.status_code}")
